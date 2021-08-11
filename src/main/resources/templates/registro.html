@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="inicio::head">
+<meta charset="UTF-8">
+<title>registro</title>
+
+</head>
+<script type="text/javascript"
+	th:src="@{/js/jquery/registroUsuario/registrarusuario.js}"></script>
+
+<body>
+	<nav th:replace="inicio::menu"></nav>
+
+	<form id="formuario" th:action="@{/auth/registro}"
+		th:object="${usuario}" method="POST">
+		<div class="card-header text-center">
+			<h1>Registro</h1>
+		</div>
+		<div class="container">
+			<div class="row mb-3 col-md-7">
+				<div class="mb-3 col-md-7">
+					<label for="txtnombre" class="form-label " >Nombre</label>
+					<input type="text" id="txtnombre"  class="form-control" th:field="*{nombre}"
+						placeholder="" value="" required>
+					<div class="invalid-feedback">Valida Nombre es requerido.</div>
+				</div>
+				<div class="mb-3 col-md-7">
+					<label for="txtapellido" class="form-label " >Apellido</label>
+					<input type="text" id="txtapellido"  class="form-control" th:field="*{apellido}"
+						placeholder="" value="" required>
+					<div class="invalid-feedback">Valida Apellido es requerido.</div>
+					<span id="errorcredcurso" class="text-danger"></span>
+				</div>
+				<div class="mb-3 col-md-7">
+					<label for="txtemail" class="form-label " >Email</label>
+					<input id="txtemail" type="email" class="form-control" th:field="*{email}"
+						placeholder="" value="" required>
+					<div class="invalid-feedback">Valida Email es requerido.</div>
+					<span id="errorcredcurso" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3 col-md-7">
+					<label for="txtusername" class="form-label " >Usuario</label>
+					<input id="txtusername" type="text" class="form-control" th:field="*{username}"
+						placeholder="" value="" required>
+					<div class="invalid-feedback">Valida Usuario es requerido.</div>
+					<span id="errorcredcurso" class="text-danger"></span>
+				</div>
+				<div class="mb-3 col-md-7 ">
+					<label for="txtpassword" class="form-label " >Password</label>
+					<input id="txtpassword" type="password" class="form-control" th:field="*{password}"
+						placeholder="" value="" required>
+					<div class="invalid-feedback">Valida Password es requerido.</div>
+					<span id="errorcredcurso" class="text-danger"></span>
+				</div>
+
+				<input id="btnregistrarusuario" type="submit"
+					class="btn btn-success btn-block   offset-3"
+					onclick="validar()" value="Continuar" />
+			</div>
+		</div>
+	</form>
+
+	<br>
+	<div id="divMensaje"></div>
+
+</body>
+
+</html>

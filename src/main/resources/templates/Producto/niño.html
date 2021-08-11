@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="inicio::head">
+<meta charset="UTF-8">
+<title>Productos</title>
+
+</head>
+<script type="text/javascript"
+	th:src="@{/js/jquery/ListaProducto/producto.js}"></script>
+	<script type="text/javascript"
+	th:src="@{/js/jquery/ProductoVenta/productoVenta.js}"></script>
+<body>
+	<nav th:replace="inicio::menu"></nav>
+
+	<div class="container mt-4">
+		<div class="row row-cols-1 row-cols-md-3">
+			<div th:each="producto :${listcategoria}">
+				<div class="col-mb-4">
+					<div class="card">
+						<div class="card-header">
+							<h2 th:text="${producto.descripcion}"></h2>
+						</div>
+						<div class="card-body">
+							<i>S/.</i><i th:text="${producto.precioventa}"></i> <img
+								th:src="@{/img/imgproductos/{img}(img=${producto.imagen})}"
+								width="200" height="180">
+						</div>
+						<div class="card-footer text-center">
+							<i>Stock:</i><i th:text="${producto.stock}"></i>
+							<div>
+								<i>Marca : </i><i th:text="${producto.marca}"></i>
+							</div>
+							<div>
+								<i>categoria : </i><i th:text="${producto.categoria}"></i>
+							</div>
+							<div>
+								<i>talla : </i><i th:text="${producto.talla}"></i>
+							</div>
+							<div>
+								<button type="submit" class="btn btn-success btncomprarproducto"
+								th:data-codproducto="${producto.idproducto}"
+								th:data-descripcionproducto="${producto.descripcion}"
+								th:data-precioventaproducto="${producto.precioventa}">comprar</button>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal comprar -->
+	<div class="modal fade" id="modalproducto" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Producto</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+				
+					<div class="form-group">
+					<label for="txtdescripcion">nombre del producto</label> <input 
+							readonly type="text" class="form-control" id="txtdescripcion">
+						</div>	
+						<div class="form-group">
+							<label for="txtprecioventa">precio del producto</label> <input
+							readonly type="text" class="form-control" id="txtprecioventa">
+							</div>	
+							<div class="form-group">
+						<label for="txtcantidadproducto">Ingrese la Cantidad</label> <input
+							type="number" class="form-control" id="txtcantidadproducto">
+					</div>
+					<input type="hidden" id="hddcodproducto" value="0" />
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Cerrar</button>
+					<button id="btnregistrarproducto" type="button" class="btn btn-primary">Guardar</button>
+				</div>
+				
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+
+	
+
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="inicio::head">
+<meta charset="UTF-8">
+<title>Productos</title>
+
+</head>
+<script type="text/javascript"
+	th:src="@{/js/jquery/ListaProducto/producto.js}"></script>
+	<script type="text/javascript"
+	th:src="@{/js/jquery/ProductoVenta/productoVenta.js}"></script>
+	
+	<script type="text/javascript"
+	th:src="@{/js/sweetalert2.all.min.js}"></script>
+<body>
+	<nav th:replace="inicio::menu"></nav>
+
+<!-- 	<div class="container mt-4">
+	<div id="mensaje"></div>
+			<input class="form-control col-md-3 light-table-filter" data-card="order-table" type="text" placeholder="Search..">
+      		<hr>
+		<div class="row row-cols-1 row-cols-md-3">
+			<div th:each="producto :${listproductos}">
+				<div class="col-mb-4">
+					<div class="card ">
+						<div class="card-header">
+							<h2 th:text="${producto.descripcion}"></h2>
+						</div>
+						<div class="card-body">
+							<i>S/.</i><i th:text="${producto.precioventa}"></i> <img
+								th:src="@{/img/imgproductos/{img}(img=${producto.imagen})}"
+								width="200" height="180">
+						</div>
+						<div class=" card card-footer text-center order-table">
+							<i>Stock:</i><i th:text="${producto.stock}"></i>
+							<div>
+								<i>Marca : </i><i th:text="${producto.marca}"></i>
+							</div>
+							<div>
+								<i>categoria : </i><i th:text="${producto.categoria}"></i>
+							</div>
+							<div>
+								<i>talla : </i><i th:text="${producto.talla}"></i>
+							</div>
+							<div>
+								<button type="submit" class="btn btn-success btncomprarproducto"
+								
+								th:data-codproducto="${producto.idproducto}"
+								th:data-descripcionproducto="${producto.descripcion}"
+								th:data-precioventaproducto="${producto.precioventa}">comprar</button>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
+	
+	<!--  -->
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col">
+                <input class="form-control col-md-3 light-table-filter"
+                    data-table="order-table" type="text" placeholder="Search.." />
+                <hr>
+                <div class="form-group table-responsive">
+                    <table class="table table-bordered order-table ">
+                        <thead>
+                            <tr>
+                                <td scope="col">Nombre del Producto</td>
+                                <td scope="col">Imagen</td>
+                                <td scope="col">Precio de Venta</td>
+                                <td scope="col">Stock</td>
+                                <td scope="col">Marca</td>
+                                <td scope="col">Categoria</td>
+                                <td scope="col">Talla</td>
+                                <td scope="col">Comprar</td>
+
+ 
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="producto :${listproductos}">
+                                <td class="text text-center" th:text="${producto.descripcion}"></td>
+                                <td class="text text-center"><img
+                                    th:src="@{/img/imgproductos/{img}(img=${producto.imagen})}"
+                                    width="200" height="180"></td>
+                                <td class="text text-center" th:text="${producto.precioventa}"></td>
+                                <td class="text text-center" th:text="${producto.stock}"></td>
+                                <td class="text text-center" th:text="${producto.marca}"></td>
+                                <td class="text text-center" th:text="${producto.categoria}"></td>
+                                <td class="text text-center" th:text="${producto.talla}"></td>
+                                <td>
+                                    <button type="submit"
+                                        class="btn btn-success btncomprarproducto"
+                                        th:data-codproducto="${producto.idproducto}"
+                                        th:data-descripcionproducto="${producto.descripcion}"
+                                        th:data-precioventaproducto="${producto.precioventa}">comprar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+	
+	<!-- Modal comprar -->
+	<div class="modal fade" id="modalproducto" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Producto</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+				
+					<div class="form-group">
+					<label for="txtdescripcion">nombre del producto</label> <input 
+							readonly type="text" class="form-control" id="txtdescripcion">
+						</div>	
+						<div class="form-group">
+							<label for="txtprecioventa">precio del producto</label> <input
+							readonly type="text" class="form-control" id="txtprecioventa">
+							</div>	
+							<div class="form-group">
+						<label for="txtcantidadproducto">Ingrese la Cantidad</label> <input
+							type="number" class="form-control" id="txtcantidadproducto">
+					</div>
+					<input type="hidden" id="hddcodproducto" value="0" />
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Cerrar</button>
+					<button id="btnregistrarproducto" type="button" class="btn btn-primary">Guardar</button>
+				</div>
+				
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+
+<!-- 	<div class="card">
+		<div class="card-header badge-danger">Listado de Productos</div>
+		<div class="card-body">
+			<form th:action="@{/Producto/registrarProducto}" method="post"
+				th:object="${ventaproductoform}">
+				<div class="form-group">
+					<label for="cboproductos"> Seleccione su Producto a
+						Comprar:</label> <select class="form-control" id="cboproductos"
+						th:field="*{idproducto}">
+						<option th:each="producto : ${listproductos}"
+							th:value="${producto.idproducto}"
+							th:text="${producto.descripcion}">selecciones</option>
+					</select>
+					<div class="form-group">
+						<label for="txtcantidad">Ingrese la cantidad a comprar:</label> <input
+							type="number" th:field="*{cantidadtotal}" class="form-control"
+							id="txtcantidad">
+					</div>
+					<button type="submit" class="btn btn-primary">Agregar
+						Producto</button>
+					<div th:if="${visualizar}" class="alert alert-primary" role="alert">
+						<span th:text="${respuesta} ?: ''"></span>
+					</div>
+
+				</div>
+			</form>
+
+		</div>
+
+	</div> -->
+
+<script type="text/javascript">
+    (function(document) {
+      'use strict';
+
+      var LightTableFilter = (function(Arr) {
+
+        var _input;
+
+        function _onInputEvent(e) {
+          _input = e.target;
+          var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
+          Arr.forEach.call(tables, function(table) {
+            Arr.forEach.call(table.tBodies, function(tbody) {
+              Arr.forEach.call(tbody.rows, _filter);
+            });
+          });
+        }
+
+        function _filter(row) {
+          var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
+          row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+        }
+
+        return {
+          init: function() {
+            var inputs = document.getElementsByClassName('light-table-filter');
+            Arr.forEach.call(inputs, function(input) {
+              input.oninput = _onInputEvent;
+            });
+          }
+        };
+      })(Array.prototype);
+
+      document.addEventListener('readystatechange', function() {
+        if (document.readyState === 'complete') {
+          LightTableFilter.init();
+        }
+      });
+
+    })(document);
+    </script>
+</body>
+</html>

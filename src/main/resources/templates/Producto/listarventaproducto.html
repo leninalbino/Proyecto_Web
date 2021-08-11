@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="inicio::head">
+<meta charset="UTF-8">
+<title>Hombre</title>
+</head>
+<script type="text/javascript"
+	th:src="@{/js/jquery/ProductoVenta/productoVenta.js}"></script>
+	<script type="text/javascript"
+	
+	th:src="@{/js/jquery/Pagos/pagos.js}"></script>
+	<script type="text/javascript"
+    th:src="@{/js/jquery/Pagos/app.js}"></script>
+    <script type="text/javascript"
+    th:src="@{/js/jquery/Pagos/ubigeo.js}"></script>
+    <script type="text/javascript"
+	th:src="@{/js/jquery/carrito/carrito.js}"></script>
+<body>
+	<nav th:replace="inicio::menu"></nav>
+    <br>
+
+        <div class="container">
+            <div class="row mt-3">
+                <div class="col">
+                    <h2 class="d-flex justify-content-center mb-3">Realizar Compra</h2>
+                        <div  class="form-group table-responsive" >
+                            <table class="table listacompra"  >
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Codigo</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Precio</th>
+                                        <th scope="col">Sub Total</th>
+                                        <th scope="col">Eliminar</th>
+                                        <th scope="col">Editar</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody >
+                                <tr th:each="producto:${lstventaproducto}">
+						<td th:text="${producto.idproducto}"></td>
+						<td th:text="${producto.categoria}"></td>
+						<td th:text="${producto.cantidadtotal}"></td>
+						<td th:text="${producto.preciounitario}"></td>
+						<td id="precio" th:text="${producto.preciototal}"></td>
+						<td>
+						<div>
+							<button type="submit"
+								class="btn btn-outline-danger btneliminaritem"
+								th:data-codproducto="${producto.idproducto}"
+								th:data-catproducto="${producto.categoria}">Eliminar</button>
+								</div>
+						</td>
+
+						<td>
+							<button type="submit" class="btn btn-success btneditarVP"
+								th:data-codproducto="${producto.idproducto}"
+								th:data-cantproducto="${producto.cantidadtotal}">Editar</button>
+						</td>
+					</tr>
+
+                                </tbody>
+                                <tr>
+                                    <th  colspan="4" scope="col" class="text-right">SUB TOTAL :</th>
+                                    <th scope="col">
+                                        <p id="subtotal" >0.00</p>
+                                        
+                                    </th>
+                                    <!-- <th scope="col"></th> -->
+                                </tr>
+                                <tr>
+                                    <th colspan="4" scope="col" class="text-right">IGV :</th>
+                                    <th scope="col">
+                                        <p id="igv">0.00</p>
+                                    </th>
+                                    <!-- <th scope="col"></th> -->
+                                </tr>
+                                <tr>
+                                    <th colspan="4" scope="col" class="text-right">TOTAL :</th>
+                                    <th scope="col">
+                                        <input id="total" name="monto" class="font-weight-bold border-0" readonly style="background-color: white;"></input>
+                                    </th>
+                                    <!-- <th scope="col"></th> -->
+                                </tr>
+
+                            </table>
+                        </div>
+
+                        <!-- <div class="row justify-content-center" id="loaders">
+                            <img id="cargando" src="img/cargando.gif" width="220">
+                        </div> -->
+
+                        <div class="row justify-content-between">
+                            <div class="col-xs-12 col-md-4" >
+                                <a href="../Producto/frmListarProducto" class="btn btn-info btn-block">Seguir comprando</a>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <button href="#" class="btn btn-success btn-block" id="btnprocesar-compra">Realizar compra</button>
+                            </div>
+                        </div>
+                </div>
+
+
+            </div>
+
+        </div>
+   <button class=""></button>
+
+<!-- Modal Pagos-->
+	<div class="modal fade" id="modalpago" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Datos
+						Personales</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<!-- contenido -->
+					<!--              <form class="needs-validation was-validated " novalidate> -->
+					<div class="row g-3">
+						<div class="col-sm-6">
+							<label for="txtnombres" class="form-label">Nombres</label> <input
+								type="text" class="form-control" id="txtnombres" placeholder=""
+								value="" required=""> <span id="errornombres"
+								class="text-danger"></span>
+							<!--               <div class="invalid-feedback"> -->
+							<!--                 Valid nombre es requerido. -->
+							<!--               </div> -->
+						</div>
+
+						<div class="col-sm-6">
+							<label for="txtapellidos" class="form-label">Apellidos</label> <input
+								type="text" class="form-control" id="txtapellidos"
+								placeholder="" value="" required=""> <span
+								id="errorapellidos" class="text-danger"></span>
+							<!--               <div class="invalid-feedback"> -->
+							<!--                 Valid last name is required. -->
+							<!--               </div> -->
+						</div>
+
+						<div class="col-12">
+							<label for="txtemail" class="form-label">Email </label> <input
+								type="email" class="form-control" id="txtemail"
+								placeholder="you@example.com" value="" required=""> <span
+								id="erroremail" class="text-danger"></span>
+
+							<!--               <div class="invalid-feedback"> -->
+							<!--                 Please enter a valid email address for shipping updates. -->
+							<!--               </div> -->
+						</div>
+
+						<div class="col-12">
+							<label for="txtdireccion" class="form-label">direccion</label> <input
+								type="text" class="form-control" id="txtdireccion"
+								placeholder="1234 Main St" required=""> <span
+								id="errordireccion" class="text-danger"></span>
+							<!--               <div class="invalid-feedback"> -->
+							<!--                 Please enter your shipping address. -->
+							<!--               </div> -->
+						</div>
+
+						<div class="col-md-5">
+							<label for="ubigeo_dep">Departamento</label> <select
+								class="form-control" id="ubigeo_dep">
+							</select> <span id="errorubigeo_dep" class="text-danger"></span>
+						</div>
+
+						<!-- exampleFormControlSelect1 -->
+
+						<div class="col-md-4">
+							<label for="ubigeo_pro">Provincia</label> <select
+								class="form-control" id="ubigeo_pro">
+							</select> <span id="errorubigeo_pro" class="text-danger"></span>
+						</div>
+						<div class="col-md-4">
+							<label for="ubigeo_dis">Distrito</label> <select
+								class="form-control" id="ubigeo_dis">
+							</select> <span id="errorubigeo_dis" class="text-danger"></span>
+						</div>
+
+						<div class="col-md-3">
+							<label for="txttelefono" class="form-label">Telefono</label> <input
+								type="text" maxlength="9" class="form-control" id="txttelefono" placeholder=""
+								required=""> <span id="errortelefono"
+								class="text-danger"></span>
+							<!--               <div class="invalid-feedback"> -->
+							<!--                 Zip code required. -->
+							<!--               </div> -->
+						</div>
+					</div>
+					<hr class="my-4">
+					<h4 class="mb-3">Metodo de Pago</h4>
+					<div class="my-3">
+						<div class="form-check">
+							<input id="checktipotarjeta" name="paymentMethod" type="radio"
+								class="form-check-input" checked="" required=""> <label
+								class="form-check-label" for="checktipotarjeta">Tarjeta
+								de Credito</label> <span id="errorchecktipotarjeta" class="text-danger"></span>
+						</div>
+					</div>
+
+					<div class="row gy-3">
+						<div class="col-md-6">
+							<label for="txtnomtarjeta" class="form-label">Nombre en
+								Tarjeta</label> <input type="text" class="form-control"
+								id="txtnomtarjeta" placeholder="" required=""> <span
+								id="errornomtarjeta" class="text-danger"></span>
+							<!--               <small class="text-muted">Full name as displayed on card</small> -->
+							<!--               <div class="invalid-feedback"> -->
+							<!--                 Name on card is required -->
+							<!--               </div> -->
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<label for="txtnumetarjeta" class="form-label">Numero de
+							Tarjeta</label> <input maxlength="12" type="text" class="form-control"
+							id="txtnumetarjeta" placeholder="" required=""> 
+							<span id="errornumetarjeta"
+							class="text-danger"></span>
+
+						<!--               <div class="invalid-feedback"> -->
+						<!--                 Credit card number is required -->
+						<!--               </div> -->
+					</div>
+
+
+
+					<div class="col-md-5">
+						<label for="txtexpiration" class="form-label">Expiration</label> <input
+							type="month" class="form-control" id="txtexpiration"
+							placeholder="" required=""> <span id="errorexpiration"
+							class="text-danger"></span>
+						<!--               <div class="invalid-feedback"> -->
+						<!--                 Expiration date required -->
+						<!--               </div> -->
+					</div>
+
+					<div class="col-md-3">
+						<label for="txtcvv" class="form-label">CVV</label> <input
+							type="text" maxlength="3" class="form-control" id="txtcvv" placeholder=""
+							required=""> <span id="errorcvv" class="text-danger"></span>
+						<!--               <div class="invalid-feedback"> -->
+						<!--                 Security code required -->
+						<!--               </div>               -->
+					</div>
+
+					<input type="hidden" id="hddidpago" value="0" />
+				</div>
+				<!--              <hr class="my-4"> -->
+				<div class="modal-footer">
+					<button class="w-100 btn btn-success btn-lg" type="submit"
+						id="guardarPagos">Pagar</button>
+					<button class="btn btn-primary btn-lg " type="submit" data-dismiss="modal">Cancelar</button>
+
+					<!--               </form> -->
+				</div>
+			</div>
+
+		</div>
+	</div>
+   
+
+
+<!-- Modal Cambiar Canitidad  -->
+	<div class="modal fade" id="modaleditarVP" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Cambiar la
+						Cantdad del Producto del Carrito</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<label for="txtcantproducto">Ingrese la Cantidad</label> <input
+							type="text" class="form-control" id="txtcantproducto">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Cerrar</button>
+					<button type="button" class="btn btn-primary"
+					id="btnregistrarnuevacantidad">Guardar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- Modal Eliminar Producto -->
+	<div class="modal fade" id="modaleliminarVp" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Eliminar
+						Item del Carrito</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<label id="mensajeeliminar"></label>
+					<input type="hidden"  id="hddcodproducto" value="0">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Cerrar</button>
+					<button type="button" class="btn btn-primary"
+					id="btneliminarproducto">Eliminar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+</html>

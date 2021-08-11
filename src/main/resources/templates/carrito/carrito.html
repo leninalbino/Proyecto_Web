@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="inicio::head">
+<meta charset="UTF-8">
+<title>Hombre</title>
+<script type="text/javascript" th:src="@{/js/jquery/carrito/agregarCarrito.js}"></script>
+
+</head>
+<body>
+
+
+
+	<nav th:replace="inicio::menu"></nav>
+	<table class="table">
+  <thead class="thead-dark">
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">Codigo</th>
+      <th scope="col">Producto</th>
+      <th scope="col">Cantidad</th>
+      <th scope="col">Precio Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="producto:${lstventaproducto}">
+      <td th:text="${producto.idproducto}"></td>
+      <td th:text="${producto.categoria}"></td>
+      <td th:text="${producto.cantidadtotal}"></td>
+       <td th:text="${producto.preciototal}"></td>
+      
+    </tr>
+    
+  </tbody>
+</table>
+
+</body>
+</html>

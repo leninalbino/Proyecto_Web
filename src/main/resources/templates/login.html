@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>login</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+	crossorigin="anonymous">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+<script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
+<!-- JavaScript Bundle with Popper -->
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+	crossorigin="anonymous"></script>
+</head>
+<body>
+	<div class="container mt-5">
+		<div class="row justify-content-center">
+			<div class="col-md-6"
+				style="width: 600px; margin-left: auto; margin-right: auto; margin-top: 80px; padding: 24px;">
+				<div th:if="${param.error}" class="alert alert-danger mb-3">Credenciales
+					incorrectos</div>
+				<div class="card"
+					style="width: 600px; margin-left: auto; padding: 24px; margin-right: auto; margin-top: 70px;">
+					<div class="card-header">
+						<h4
+							style="width: 2000px; margin-left: auto; padding: 1px; margin-right: auto; margin-top: 40px;">Iniciar
+							Secion</h4>
+					</div>
+					<div class="card-body">
+						<form id="loginform" method="POST" th:action="@{/auth/login-post}"
+							role="form">
+							<div class="mb-3">
+								<label class="col-md-3"> USERNAME</label> <input type="text"
+									name="username" class="from-control col-md-7" />
+							</div>
+
+							<div class="mb-1" style="margin-top: 30px;">
+								<label class="col-md-3" style="margin-top: 18px;">
+									PASSWORD</label> <input type="password" name="password"
+									class="from-control col-md-7" style="margin-top: 12px;" />
+							</div>
+
+							<input type="submit"
+								class="btn btn-success btn-block col-md-1 offset-0"
+								style="margin-top: 20px;" value="Continuar" />
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+</body>
+</html>
